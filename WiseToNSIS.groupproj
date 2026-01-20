@@ -1,0 +1,60 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{BDC17B40-900D-4833-B458-9F9EE1CCD357}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="WiseToNSIS.dpr">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="WiseToNSISCLI.dpr">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="test\WiseToNSIS.Tests.dpr">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="WiseToNSIS">
+        <MSBuild Projects="WiseToNSIS.dpr"/>
+    </Target>
+    <Target Name="WiseToNSIS:Clean">
+        <MSBuild Projects="WiseToNSIS.dpr" Targets="Clean"/>
+    </Target>
+    <Target Name="WiseToNSIS:Make">
+        <MSBuild Projects="WiseToNSIS.dpr" Targets="Make"/>
+    </Target>
+    <Target Name="WiseToNSISCLI">
+        <MSBuild Projects="WiseToNSISCLI.dpr"/>
+    </Target>
+    <Target Name="WiseToNSISCLI:Clean">
+        <MSBuild Projects="WiseToNSISCLI.dpr" Targets="Clean"/>
+    </Target>
+    <Target Name="WiseToNSISCLI:Make">
+        <MSBuild Projects="WiseToNSISCLI.dpr" Targets="Make"/>
+    </Target>
+    <Target Name="WiseToNSIS_Tests">
+        <MSBuild Projects="test\WiseToNSIS.Tests.dpr"/>
+    </Target>
+    <Target Name="WiseToNSIS_Tests:Clean">
+        <MSBuild Projects="test\WiseToNSIS.Tests.dpr" Targets="Clean"/>
+    </Target>
+    <Target Name="WiseToNSIS_Tests:Make">
+        <MSBuild Projects="test\WiseToNSIS.Tests.dpr" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="WiseToNSIS;WiseToNSISCLI;WiseToNSIS_Tests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="WiseToNSIS:Clean;WiseToNSISCLI:Clean;WiseToNSIS_Tests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="WiseToNSIS:Make;WiseToNSISCLI:Make;WiseToNSIS_Tests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

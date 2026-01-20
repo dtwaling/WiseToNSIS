@@ -1,0 +1,1816 @@
+Document Type: WSE
+item: Global
+  Version=9.02
+  Title=SomeTechCo - Workflow Management Suite Server Install Installation
+  Flags=01000010
+  Split=1420
+  Languages=65 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+  Japanese Font Name=MS Gothic
+  Japanese Font Size=9
+  Progress Bar DLL=%_WISE_%\PROGRESS\Wizwin32.dll
+  Start Gradient=0 0 255
+  End Gradient=0 0 0
+  Windows Flags=00000100000100000010110001001010
+  Log Pathname=%MAINDIR%\INSTALL.LOG
+  Message Font=MS Sans Serif
+  Font Size=8
+  Icon Pathname=WiseUpdt.ico
+  Pages Modified=00011001011100100000000000000000
+  Extra Pages=00000000000000000000000010110000
+  Disk Label=GLBS INC
+  Disk Filename=SETUP
+  Patch Flags=0000000000000001
+  Patch Threshold=85
+  Patch Memory=4000
+  MIF PDF Version=1.0
+  MIF SMS Version=2.0
+  EXE Filename=C:\Program Files (x86)\Symantec\Wise\WiseScript Package Editor\WiseUpdt\WiseUpdt.exe
+  FTP Cluster Size=20
+  Per-User Version ID=1
+  Dialogs Version=8
+  Version File=1.0
+  Version Description=SomeTechCo Product Update Checker
+  Version Copyright=[[WiseCopyright]]
+  Version Company=[[WiseCompany]]
+  Crystal Format=10111100101100000010001001001001
+  Step View=&All
+  Variable Name1=_SYS_
+  Variable Default1=C:\Windows\system32
+  Variable Flags1=00001000
+  Variable Name2=_WISE_
+  Variable Default2=C:\Program Files (x86)\Symantec\Wise\WiseScript Package Editor
+  Variable Flags2=00001000
+  Variable Name3=_INIT_WINDOW_
+  Variable Default3=HIDE
+  Variable Name4=_WIN_
+  Variable Default4=C:\Windows
+  Variable Flags4=00001000
+  Requested Execution Level=requireAdministrator
+end
+item: Set Variable
+  Variable=MAINDIR
+  Flags=00001100
+end
+item: Set Variable
+  Variable=MAINDIR
+  Value=SomeTechCo
+end
+item: Get Registry Key Value
+  Variable=ROOTINSTPATH
+  Key=Software\SomeTechCo\
+  Value Name=RootInstPath
+  Flags=00000100
+end
+item: If/While Statement
+  Variable=ROOTINSTPATH
+end
+item: Display Message
+  Title=Root Directory Registry Entry Not Found
+  Text=The registry entry for the root install directory for SomeTechCo was not found.  Contact SomeTechCo support for further information.
+  Flags=00001000
+end
+item: Exit Installation
+end
+item: End Block
+end
+item: Set Variable
+  Variable=ROOTINSTPATH
+  Value=%ROOTINSTPATH%
+  Flags=00001100
+end
+item: Check if File/Dir Exists
+  Pathname=%ROOTINSTPATH%\PMWinstall\IniFiles\PMServer.ini
+  Message=The PMServer.ini file was not found in the %ROOTINSTPATH%.  Contact SomeTechCo support for further information on this issue.
+  Title=PMServer.ini file not found
+  Flags=00000011
+end
+item: Remark
+end
+item: Get Registry Key Value
+  Variable=STARTUPDIR
+  Key=Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
+  Default=%WIN%\Start Menu\Programs\StartUp
+  Value Name=StartUp
+  Flags=00000010
+end
+item: Remark
+end
+item: Check if File/Dir Exists
+  Pathname=%STARTUPDIR%\Check for SomeTechCo Product Updates.lnk
+  Flags=00000101
+end
+item: Set Variable
+  Variable=ADDTOSTARTUP
+end
+item: Else Statement
+end
+item: Set Variable
+  Variable=ADDTOSTARTUP
+  Value=A
+end
+item: End Block
+end
+item: Remark
+end
+item: Remark
+  Text=Parse the command line, look for switch and AppTitle
+end
+remarked item: Set Variable
+  Variable=CMDLINE
+end
+item: Set Variable
+  Variable=APPTITLE
+end
+item: Set Variable
+  Variable=RUN_TYPE
+end
+item: Set Variable
+  Variable=INI_URL
+end
+item: Set Variable
+  Variable=LOCAL_VERSION
+end
+item: Set Variable
+  Variable=DISABLED
+  Value=!
+end
+item: Set Variable
+  Variable=README_PATH
+end
+item: Set Variable
+  Variable=DOWNLOAD_SIZE
+  Value=0
+end
+item: If/While Statement
+  Variable=CMDLINE
+  Flags=00000001
+end
+item: If/While Statement
+  Value=(Left$(CMDLINE,1)="/") AND (Len(CMDLINE) > 1)
+  Flags=00001101
+end
+item: Set Variable
+  Variable=RUN_TYPE
+  Value=LCase$(Mid$(CMDLINE,2,1))
+  Flags=00100000
+end
+item: Set Variable
+  Variable=APPTITLE
+  Value=SomeTechCo - Workflow Management Suite Server Install
+end
+item: End Block
+end
+item: End Block
+end
+item: Get System Information
+  Variable=APPPATH
+  Flags=00001101
+end
+item: Set Variable
+  Variable=APPPATH
+  Value=%APPPATH%
+  Flags=00010100
+end
+item: Set Variable
+  Variable=APPPATH
+  Value=%APPPATH%
+  Flags=00011100
+end
+item: If/While Statement
+  Variable=APPTITLE
+end
+item: Get Registry Key Value
+  Variable=APPTITLE
+  Key=Software\Wise Solutions\WiseUpdate\AppPaths
+  Value Name=%APPPATH%
+  Flags=00000100
+end
+item: End Block
+end
+item: Remark
+end
+item: If/While Statement
+  Variable=APPTITLE
+  Flags=00000001
+end
+item: Get Registry Key Value
+  Variable=CHECK_DAYS
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=CheckDays
+  Flags=00000100
+end
+item: If/While Statement
+  Variable=RUN_TYPE
+  Value=c
+end
+item: Remark
+  Text=Check to see if enough days have elapsed to perform another check
+end
+item: Get Registry Key Value
+  Variable=CHECK_LAST
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=LastCheck
+  Flags=00000100
+end
+item: If/While Statement
+  Value=(CHECK_LAST + (CHECK_DAYS * 86400)) > INSTALL_SDTVAL
+  Flags=00001101
+end
+item: Exit Installation
+end
+item: End Block
+end
+item: End Block
+end
+item: Edit Registry
+  Total Keys=1
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  New Value=%INSTALL_SDTVAL%
+  Value Name=LastCheck
+  Root=2
+  Data Type=3
+end
+item: Get Registry Key Value
+  Variable=INI_URL
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=SettingsURL
+  Flags=00000100
+end
+item: Get Registry Key Value
+  Variable=INI_USERNAME
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=UserName
+  Flags=00000100
+end
+item: Get Registry Key Value
+  Variable=INI_PASSWORD
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=Password
+  Flags=00000100
+end
+item: Get Registry Key Value
+  Variable=INI_ALTERNATE
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=WebPage
+  Flags=00000100
+end
+item: If/While Statement
+  Value=INI_USERNAME <> "" AND INI_PASSWORD <> ""
+  Flags=00001101
+end
+item: Parse String
+  Source=%INI_URL%
+  Pattern=7
+  Variable2=TEMP_URL
+  Flags=00001000
+end
+item: Parse String
+  Source=%TEMP_URL%
+  Pattern=/
+  Variable1=TEMP_HOST
+  Variable2=TEMP_DIR
+end
+item: Set Variable
+  Variable=INI_URL
+  Value=http://%TEMP_HOST%/%INI_USERNAME%:%INI_PASSWORD%@%TEMP_DIR%
+end
+item: End Block
+end
+item: Get Registry Key Value
+  Variable=LOCAL_VERSION
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  Value Name=Version
+  Flags=00000100
+end
+item: End Block
+end
+item: If/While Statement
+  Variable=INI_URL
+end
+item: Display Message
+  Title=Associated Application Not Found
+  Title French=Application associée introuvable
+  Title German=Verknüpfte Anwendung nicht gefunden
+  Title Spanish=No se ha encontrado la aplicación asociada
+  Title Italian=Applicazione associata non trovata.
+  Text=The WiseUpdate client could not locate an associated application to update. Please make sure that this software is installed properly.
+  Text French=WiseUpdate Client n'a pas pu localiser une application associée à mettre à jour. Veuillez vous assurer que ce logiciel est installé correctement.
+  Text German=Der WiseUpdate-Client hat keine verknüpfte Anwendung zur Aktualisierung gefunden. Stellen Sie sicher, daß diese Software ordnungsgemäß installiert ist.
+  Text Spanish=WiseUpdate Client no pudo ubicar una aplicación asociada para actualizarla. Asegúrese de que el software se ha instalado correctamente.
+  Text Italian=WiseUpdate Client non è stato in grado di trovare un'associazione applicata da aggiornare. Verificare che il programma sia installato correttamente.
+  Flags=00101000
+end
+item: Exit Installation
+end
+item: End Block
+end
+item: Remark
+end
+item: Get Temporary Filename
+  Variable=INI_NAME
+end
+item: Set Variable
+  Variable=README_NAME
+  Value=STCReleaseNotes.pdf
+end
+item: Get Registry Key Value
+  Variable=PROXY_SETTINGS
+  Key=WebDeploy\ProxyEnable
+end
+item: Set Variable
+  Variable=PROXY_TYPE
+  Value=CERN Proxy Server
+end
+item: Set Variable
+  Variable=USE_PROXY
+  Value=A
+end
+item: If/While Statement
+  Variable=PROXY_SETTINGS
+  Value=1
+end
+item: Set Variable
+  Variable=USE_PROXY
+  Value=B
+end
+item: Get Registry Key Value
+  Variable=PROXY_SETTINGS
+  Key=WebDeploy\ProxyServer
+end
+item: Set Variable
+  Variable=PROXY_CHECK
+  Value=%PROXY_SETTINGS%
+  Flags=00011100
+end
+item: If/While Statement
+  Value=Left$(PROXY_CHECK,6) = "socks="
+  Flags=00001101
+end
+item: Set Variable
+  Variable=PROXY_TYPE
+  Value=SOCKS Proxy Server
+end
+item: End Block
+end
+item: Parse String
+  Source=%PROXY_SETTINGS%
+  Pattern==
+  Variable1=PROXY_CHECK
+  Variable2=PROXY_SETTINGS
+end
+item: Parse String
+  Source=%PROXY_SETTINGS%
+  Pattern=:
+  Variable1=PROXY_SERVER
+  Variable2=PORT_NUMBER
+end
+item: End Block
+end
+item: Set Variable
+  Variable=ERROR_PAGE
+  Value=TRUE
+end
+item: If/While Statement
+  Variable=INI_ALTERNATE
+  Flags=00000001
+end
+item: Set Variable
+  Variable=TEMP_WEB_PAGE
+  Value=%TEMP%\~WseUpdt.htm
+end
+item: Insert Line into Text File
+  Pathname=%TEMP_WEB_PAGE%
+  New Text=<HTML> <HEAD> <TITLE>Loading...</TITLE> </HEAD> <BODY BGCOLOR=#ffffff TEXT=#000040> <META HTTP-EQUIV="REFRESH" 
+  Line Number=0
+end
+item: Insert Line into Text File
+  Pathname=%TEMP_WEB_PAGE%
+  New Text=CONTENT="0; URL=%INI_ALTERNATE%">
+  Line Number=0
+end
+item: Insert Line into Text File
+  Pathname=%TEMP_WEB_PAGE%
+  New Text=</BODY></HTML>
+  Line Number=0
+end
+item: End Block
+end
+item: Set Variable
+  Variable=SLA
+  Value=999
+end
+item: Remark
+end
+item: Wizard Block
+  Direction Variable=DIRECTION
+  Display Variable=DISPLAY
+  Bitmap Pathname=C:\Dev\Source\Installations\WiseUpdt\Wizard.bmp
+  X Position=9
+  Y Position=10
+  Filler Color=8421376
+  Dialog=Welcome
+  Dialog=Error
+  Dialog=No Maintenance
+  Dialog=Text/RTF ReadMe
+  Variable=
+  Variable=ERROR_PAGE
+  Variable=
+  Variable=README_SKIP
+  Value=
+  Value=TRUE
+  Value=
+  Value=1
+  Compare=0
+  Compare=1
+  Compare=0
+  Compare=0
+  Flags=00000011
+end
+item: Custom Dialog Set
+  Name=Welcome
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=Check for Updates to %APPTITLE%
+    Title French=Vérifiez les mises à jour de %APPTITLE%
+    Title German=Suchen nach Aktualisierungen von %APPTITLE%
+    Title Spanish=Comprobar actualizaciones de %APPTITLE%
+    Title Italian=Ricerca aggiornamenti di %APPTITLE%
+    Width=280
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Static
+      Rectangle=87 10 271 85
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=This wizard will check the Internet for any upgrades to %APPTITLE%. You must have a connection to the Internet configured and a working WinSock layer for this wizard to function properly.
+      Text=
+      Text=Press the Next button to check the Internet for an upgrade to the latest version of this software. Make sure your internet connection is active before pressing the Next button.
+      Text French=Cet assistant recherchera des mises à niveau de %APPTITLE% dans Internet. Votre connexion Internet doit être configurée et votre couche WinSock opérationnelle pour que cet assistant fonctionne correctement.
+      Text French=
+      Text French=Appuyez sur le bouton Suivant pour rechercher des mises à niveau de la dernière version de ce logiciel dans Internet. Assurez-vous d'avoir une connexion Internet active avant d'appuyer sur le bouton Suivant.
+      Text German=Dieser Assistent überprüft das Internet auf Aktualisierungen von %APPTITLE%. Sie müssen über einen konfigurierten Internetzugang und eine funktionsfähige WinSock-Schicht verfügen, um diesen Assistenten ausführen zu können.
+      Text German=
+      Text German=Klicken Sie auf 'Weiter', um das Internet nach Aktualisierungen der letzten Softwareversion zu durchsuchen. Bevor Sie auf 'Weiter' klicken, vergewissern Sie sich, daß Ihre Internetverbindung hergestellt wurde.
+      Text Spanish=El asistente comprobará si hay actualizaciones de %APPTITLE% en Internet. Es necesario tener configurada una conexión a Internet y una capa WinSock operativa para que el asistente funcione correctamente.
+      Text Spanish=
+      Text Spanish=Pulse el botón Siguiente para comprobar si está disponible en Internet la última versión actualizada de este software. Asegúrese de que la conexión a Internet se encuentra activada antes de pulsar el botón Siguiente.
+      Text Italian=La procedura guidata ricercherà su Internet gli eventuali aggiornamenti di %APPTITLE%. Perché questa procedura guidata funzioni correttamente, è necessario disporre di connessione a Internet configurata e di un livello WinSock funzionante.
+      Text Italian=
+      Text Italian=Scegliere Avanti per ricercare su Internet l'aggiornamento all'ultima versione di questo programma. Assicurarsi che la connessione a Internet sia attiva prima di scegliere Avanti.
+    end
+    item: Static
+      Rectangle=87 93 270 149
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000111
+      Text=Advanced Settings
+      Text French=Paramètres avancés
+      Text German=Erweiterte Einstellungen
+      Text Spanish=Configuración avanzada
+      Text Italian=Impostazioni avanzate
+    end
+    item: Static
+      Rectangle=92 103 269 128
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Press the Advanced button below to view or change the proxy server you are using or the automatic prompting interval.
+      Text French=Appuyez sur le bouton Avancé ci-dessous pour afficher ou modifier le serveur proxy que vous utilisez ou l'intervalle d'invite automatique.
+      Text German=Klicken Sie auf untenstehende Schaltfläche 'Erweitert', wenn Sie den von Ihnen verwendeten Proxyserver oder das automatische Eingabeaufforderungsintervall anzeigen oder ändern möchten.
+      Text Spanish=Pulse el botón Avanzadas para visualizar o cambiar el servidor proxy que utiliza o el intervalo de pregunta automático.
+      Text Italian=Scegliere Avanzate per visualizzare o modificare il server proxy utilizzato o l'intervallo di prompt automatico.
+    end
+    item: Push Button
+      Rectangle=154 129 196 143
+      Destination Dialog=1
+      Action=2
+      Create Flags=01010000000000010000000000000000
+      Text=&Advanced
+      Text French=&Avancé
+      Text German=&Erweitert
+      Text Spanish=Avan&zadas
+      Text Italian=&Avanzate
+    end
+    item: Push Button
+      Rectangle=172 185 214 199
+      Variable=DIRECTION
+      Value=N
+      Create Flags=01010000000000010000000000000001
+      Text=&Next >
+      Text French=&Suivant >
+      Text German=&Weiter >
+      Text Spanish=&Siguiente >
+      Text Italian=&Avanti >
+    end
+    item: Push Button
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+  end
+  item: Dialog
+    Title=Advanced Settings
+    Title French=Paramètres avancés
+    Title German=Erweiterte Einstellungen
+    Title Spanish=Configuración avanzada
+    Title Italian=Impostazioni avanzate
+    Width=180
+    Height=153
+    Font Name=Helv
+    Font Size=8
+    item: Static
+      Rectangle=5 15 171 79
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Radio Button
+      Rectangle=9 5 135 25
+      Variable=USE_PROXY
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000001001
+      Text=&Use default proxy server
+      Text=&Specify proxy server information
+      Text=
+      Text French=&Utilisez le serveur proxy par défaut
+      Text French=&Spécifiez les informations du serveur proxy
+      Text French=
+      Text German=Standard-Proxyserver &verwenden
+      Text German=Proxyserverinformationen &festlegen
+      Text German=
+      Text Spanish=&Utilizar servidor proxy predeterminado
+      Text Spanish=&Especificar información de servidor proxy
+      Text Spanish=
+      Text Italian=&Utilizza server proxy predefinito
+      Text Italian=&Specifica informazioni server proxy
+      Text Italian=
+    end
+    item: Static
+      Control Name=ServerText
+      Rectangle=10 30 70 40
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=&Proxy Server:
+      Text French=Serveur &proxy
+      Text German=&Proxyserver:
+      Text Spanish=Se&rvidor proxy
+      Text Italian=Server &proxy:
+    end
+    item: Editbox
+      Control Name=ServerEdit
+      Rectangle=71 28 165 40
+      Variable=PROXY_SERVER
+      Help Context=16711681
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000100000010000000010000000
+      Text=%PROXY_SERVER%
+      Text French=%PROXY_SERVER%
+      Text German=%PROXY_SERVER%
+      Text Spanish=%PROXY_SERVER%
+      Text Italian=%PROXY_SERVER%
+    end
+    item: Static
+      Control Name=PortText
+      Rectangle=10 47 70 57
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Port &Number:
+      Text French=&Numéro de port :
+      Text German=Port-&Nummer:
+      Text Spanish=Número de puer&to:
+      Text Italian=Numero porta:
+    end
+    item: Editbox
+      Control Name=PortEdit
+      Rectangle=71 45 100 57
+      Variable=PORT_NUMBER
+      Help Context=16711680
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000100000010000000010000000
+      Text=%PORT_NUMBER%
+      Text French=%PORT_NUMBER%
+      Text German=%PORT_NUMBER%
+      Text Spanish=%PORT_NUMBER%
+      Text Italian=%PORT_NUMBER%
+    end
+    item: Static
+      Control Name=TypeText
+      Rectangle=10 63 70 73
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Proxy &Type:
+      Text French=&Type proxy :
+      Text German=Proxy&typ:
+      Text Spanish=Tip&o de servidor proxy
+      Text Italian=&Tipo proxy:
+    end
+    item: Combobox
+      Control Name=TypeEdit
+      Rectangle=71 60 165 116
+      Variable=PROXY_TYPE
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000001000000011
+      Text=CERN Proxy Server
+      Text=SOCKS Proxy Server
+      Text=
+    end
+    item: Static
+      Control Name=PortText
+      Rectangle=13 102 73 112
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=&Check Interval (days):
+      Text French=&Check Interval (days):
+      Text German=&Check Interval (days):
+      Text Spanish=&Check Interval (days):
+      Text Italian=&Check Interval (days):
+    end
+    item: Editbox
+      Rectangle=75 100 104 112
+      Variable=CHECK_DAYS
+      Help Context=16711680
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000100000010000000010000000
+      Text=%CHECK_DAYS%
+      Text French=%PORT_NUMBER%
+      Text German=%PORT_NUMBER%
+      Text Spanish=%PORT_NUMBER%
+      Text Italian=%PORT_NUMBER%
+    end
+    item: Push Button
+      Rectangle=86 118 126 132
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000000001
+      Text=OK
+      Text French=OK
+      Text German=OK
+      Text Spanish=Aceptar
+      Text Italian=OK
+    end
+    item: Push Button
+      Rectangle=131 118 171 132
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000001
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Checkbox
+      Rectangle=5 84 161 98
+      Variable=ADDTOSTARTUP
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000000011
+      Text=Add SomeTechCo Update Check to Startup Group
+      Text=
+    end
+    item: If/While Statement
+      Variable=USE_PROXY
+      Value=A
+    end
+    item: Set Control Attribute
+      Control Name=PortEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=PortText
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=ServerEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=ServerText
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=TypeEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=TypeText
+      Operation=1
+    end
+    item: Else Statement
+    end
+    item: Set Control Attribute
+      Control Name=PortEdit
+    end
+    item: Set Control Attribute
+      Control Name=PortText
+    end
+    item: Set Control Attribute
+      Control Name=ServerEdit
+    end
+    item: Set Control Attribute
+      Control Name=ServerText
+    end
+    item: Set Control Attribute
+      Control Name=TypeEdit
+    end
+    item: Set Control Attribute
+      Control Name=TypeText
+    end
+    item: End Block
+    end
+  end
+end
+item: Custom Dialog Set
+  Name=Error
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=Check for Updates to %APPTITLE%
+    Title French=Vérifiez les mises à jour de %APPTITLE%
+    Title German=Suchen nach Aktualisierungen von %APPTITLE%
+    Title Spanish=Comprobar actualizaciones de %APPTITLE%
+    Title Italian=Ricerca aggiornamenti di %APPTITLE%
+    Width=280
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Static
+      Rectangle=87 10 271 85
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=An error occurred while trying to locate the update to %APPTITLE%. This could be caused if you do not have an active connection to the Internet, the host server may not be running, you may not have access to the host server, or your proxy server settings may not be valid.
+      Text=
+      Text=Click the Back button to choose your proxy server settings or the cancel button to exit this program.
+      Text French=Une erreur est survenue en tentant de localiser la mise à jour de %APPTITLE%. Elle peut survenir si vous n'avez pas de connexion active à l'Internet, si le serveur hôte n'est pas allumé, si vous n'avez pas d'accès au serveur hôte ou si la configuration de votre serveur proxy n'est pas correcte.
+      Text French=
+      Text French=Cliquez sur le bouton Précédent pour sélectionner la configuration de votre serveur proxy ou le bouton Annuler pour quitter ce programme.
+      Text German=Fehler beim Versuch, die Aktualisierung für %APPTITLE% zu suchen. Mögliche Ursachen dafür sind, daß Sie über keine aktive Internetverbindung verfügen, der Host-Server nicht ausgeführt wird, Sie keinen Zugriff auf den Host-Server haben oder die Einstellungen Ihres Proxy-Servers ungültig sind.
+      Text German=
+      Text German=Klicken Sie auf die Schaltfläche 'Zurück', um die Einstellungen für Ihren Proxy-Server auszuwählen, oder auf die Schaltfläche 'Abbrechen', um das Programm zu beenden.
+      Text Spanish=Se produjo un error al intentar localizar la actualización de %APPTITLE%. Este problema podría producirse si no hay una conexión activa a Internet, el servidor host no se encuentra en ejecución, no tiene acceso a este servidor o la configuración del servidor proxy no es válida.
+      Text Spanish=
+      Text Spanish=Haga clic en el botón Anterior para configurar el servidor proxy o en el botón Cancelar para salir de este programa.
+      Text Italian=Si è verificato un errore durante la ricerca dell'aggiornamento a %APPTITLE%. La causa potrebbe essere: mancanza di connessione attiva a Internet, server host non in funzione, mancanza di accesso al server host o impostazioni errate del server proxy.
+      Text Italian=
+      Text Italian=Scegliere Indietro per selezionare le impostazioni del server proxy oppure Annulla per uscire dal programma.
+    end
+    item: Static
+      Control Name=UpdateBox
+      Rectangle=87 93 270 152
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000111
+      Text=Update Web Page
+      Text French=Actualiser la page Web
+      Text German=Internetseite aktualisieren
+      Text Spanish=Página web de actualización
+      Text Italian=Aggiorna pagina Web
+    end
+    item: Static
+      Control Name=UpdateText
+      Rectangle=92 103 266 128
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Click the Web Page button to view the %APPTITLE% update page in your web browser. You can download the update from this page.
+      Text French=Cliquez sur le bouton Page Web pour afficher la page mise à jour de %APPTITLE% dans votre navigateur Web. Vous pouvez télécharger la mise à jour à partir de cette page.
+      Text German=Klicken Sie auf die Schaltfläche 'Internetseite', um die %APPTITLE%-Aktualisierungsseite in Ihrem Internetbrowser anzuzeigen. Sie können die Aktualisierung von dieser Seite herunterladen.
+      Text Spanish=Haga clic en el botón Página web para visualizar la página de actualización de %APPTITLE% en su navegador de Internet. Desde esta página se puede descargar la actualización.
+      Text Italian=Scegliere Pagina Web per visualizzare la pagina dell'aggiornamento di %APPTITLE% nel browser web. È possibile eseguire il download dell'aggiornamento da questa pagina.
+    end
+    item: Push Button
+      Control Name=UpdateButton
+      Rectangle=154 132 196 146
+      Alternate=1%TEMP_WEB_PAGE%
+      Destination Dialog=1
+      Action=6
+      Create Flags=01010000000000010000000000000000
+      Text=&Web Page
+      Text French=Page &Web
+      Text German=&Internetseite
+      Text Spanish=&Página web
+      Text Italian=Pagina &Web
+    end
+    item: Push Button
+      Control Name=NextButton
+      Rectangle=172 185 214 199
+      Variable=DISABLED
+      Create Flags=01010000000000010000000000000000
+      Text=&Next >
+      Text French=&Suivant >
+      Text German=&Weiter >
+      Text Spanish=&Siguiente >
+      Text Italian=&Avanti >
+    end
+    item: Push Button
+      Rectangle=130 185 172 199
+      Variable=DIRECTION
+      Value=B
+      Create Flags=01010000000000010000000000000001
+      Text=< &Back
+      Text French=< &Précédent
+      Text German=< &Zurück
+      Text Spanish=< &Atrás
+      Text Italian=< I&ndietro
+    end
+    item: Push Button
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: If/While Statement
+      Variable=DLG_EVENT_TYPE
+      Value=INIT
+    end
+    item: If/While Statement
+      Variable=TEMP_WEB_PAGE
+    end
+    item: Set Control Attribute
+      Control Name=NextButton
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=UpdateBox
+      Operation=2
+    end
+    item: Set Control Attribute
+      Control Name=UpdateButton
+      Operation=2
+    end
+    item: Set Control Attribute
+      Control Name=UpdateText
+      Operation=2
+    end
+    item: End Block
+    end
+    item: End Block
+    end
+  end
+  item: Dialog
+    Title=Advanced Settings
+    Title French=Paramètres avancés
+    Title German=Erweiterte Einstellungen
+    Title Spanish=Configuración avanzada
+    Title Italian=Impostazioni avanzate
+    Width=168
+    Height=120
+    Font Name=Helv
+    Font Size=8
+    item: Static
+      Rectangle=5 15 156 79
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Radio Button
+      Rectangle=9 5 107 25
+      Variable=USE_PROXY
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000001001
+      Text=&Use default proxy server
+      Text=&Specify proxy server information
+      Text=
+      Text French=&Utilisez le serveur proxy par défaut
+      Text French=&Spécifiez les informations du serveur proxy
+      Text French=
+      Text German=Standard-Proxyserver &verwenden
+      Text German=Proxyserverinformationen &festlegen
+      Text German=
+      Text Spanish=&Utilizar servidor proxy predeterminado
+      Text Spanish=&Especificar información de servidor proxy
+      Text Spanish=
+      Text Italian=&Utilizza server proxy predefinito
+      Text Italian=&Specifica informazioni server proxy
+      Text Italian=
+    end
+    item: Static
+      Control Name=ServerText
+      Rectangle=10 30 50 40
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=&Proxy Server:
+      Text French=Serveur &proxy
+      Text German=&Proxyserver:
+      Text Spanish=Se&rvidor proxy
+      Text Italian=Server &proxy:
+    end
+    item: Editbox
+      Control Name=ServerEdit
+      Rectangle=51 28 150 40
+      Variable=PROXY_SERVER
+      Help Context=16711681
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000100000010000000010000000
+      Text=%PROXY_SERVER%
+      Text French=%PROXY_SERVER%
+      Text German=%PROXY_SERVER%
+      Text Spanish=%PROXY_SERVER%
+      Text Italian=%PROXY_SERVER%
+    end
+    item: Static
+      Control Name=PortText
+      Rectangle=10 47 50 57
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Port &Number:
+      Text French=&Numéro de port :
+      Text German=Port-&Nummer:
+      Text Spanish=Número de puer&to:
+      Text Italian=Numero porta:
+    end
+    item: Editbox
+      Control Name=PortEdit
+      Rectangle=51 45 80 57
+      Variable=PORT_NUMBER
+      Help Context=16711681
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000100000010000000010000000
+      Text=%PORT_NUMBER%
+      Text French=%PORT_NUMBER%
+      Text German=%PORT_NUMBER%
+      Text Spanish=%PORT_NUMBER%
+      Text Italian=%PORT_NUMBER%
+    end
+    item: Static
+      Control Name=TypeText
+      Rectangle=9 63 44 73
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Proxy &Type:
+      Text French=&Type proxy :
+      Text German=Proxy&typ:
+      Text Spanish=Tip&o de servidor proxy
+      Text Italian=&Tipo proxy:
+    end
+    item: Combobox
+      Control Name=TypeEdit
+      Rectangle=50 60 150 116
+      Variable=PROXY_TYPE
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000001000000011
+      Text=CERN Proxy Server
+      Text=SOCKS Proxy Server
+      Text=
+      Text French=Serveur proxy CERN
+      Text French=Serveur proxy SOCKS
+      Text French=
+      Text German=CERN-Proxyserver
+      Text German=SOCKS-Proxyserver
+      Text German=
+      Text Spanish=Servidor proxy CERN
+      Text Spanish=Servidor proxy SOCKS
+      Text Spanish=
+      Text Italian=Server proxy CERN
+      Text Italian=Server proxy SOCKS
+      Text Italian=
+    end
+    item: Push Button
+      Rectangle=72 84 112 98
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000000001
+      Text=OK
+      Text French=OK
+      Text German=OK
+      Text Spanish=Aceptar
+      Text Italian=OK
+    end
+    item: Push Button
+      Rectangle=117 84 157 98
+      Action=1
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000001
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: If/While Statement
+      Variable=USE_PROXY
+      Value=A
+    end
+    item: Set Control Attribute
+      Control Name=PortEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=PortText
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=ServerEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=ServerText
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=TypeEdit
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=TypeText
+      Operation=1
+    end
+    item: Else Statement
+    end
+    item: Set Control Attribute
+      Control Name=PortEdit
+    end
+    item: Set Control Attribute
+      Control Name=PortText
+    end
+    item: Set Control Attribute
+      Control Name=ServerEdit
+    end
+    item: Set Control Attribute
+      Control Name=ServerText
+    end
+    item: Set Control Attribute
+      Control Name=TypeEdit
+    end
+    item: Set Control Attribute
+      Control Name=TypeText
+    end
+    item: End Block
+    end
+  end
+end
+item: If/While Statement
+  Variable=SLA
+  Value=1
+  Flags=00000001
+end
+item: Custom Dialog Set
+  Name=No Maintenance
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=No Maintenance
+    Title French=Commencer l'installation
+    Title German=Installation beginnen
+    Title Portuguese=Iniciar Instalação
+    Title Spanish=Comenzar la Instalación
+    Title Italian=Avvia Installazione
+    Title Danish=Start installationen
+    Title Dutch=Start de installatie
+    Title Norwegian=Start installeringen
+    Title Swedish=Starta installationen
+    Width=289
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Push Button
+      Control Name=NextButton
+      Rectangle=172 185 214 199
+      Variable=DIRECTION
+      Value=N
+      Create Flags=01010000000000010000000000000001
+      Text=&Next >
+      Text French=&Suivant>
+      Text German=&Weiter>
+      Text Portuguese=&Próximo>
+      Text Spanish=&Siguiente >
+      Text Italian=&Avanti >
+      Text Danish=&Næste>
+      Text Dutch=&Volgende>
+      Text Norwegian=&Neste>
+      Text Swedish=&Nästa >
+    end
+    item: Push Button
+      Rectangle=130 185 172 199
+      Variable=DIRECTION
+      Value=B
+      Create Flags=01010000000000010000000000000000
+      Text=< &Back
+      Text French=<&Retour
+      Text German=<&Zurück
+      Text Portuguese=<&Retornar
+      Text Spanish=<&Retroceder
+      Text Italian=< &Indietro
+      Text Danish=<&Tilbage
+      Text Dutch=<&Terug
+      Text Norwegian=<&Tilbake
+      Text Swedish=< &Tillbaka
+    end
+    item: Push Button
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Portuguese=Cancelar
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+      Text Danish=Annuller
+      Text Dutch=Annuleren
+      Text Norwegian=Avbryt
+      Text Swedish=Avbryt
+    end
+    item: Static
+      Rectangle=82 25 266 86
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=SomeTechCodetected that you either do not have a  software maintenance contract or your contract has expired.  Without a software maintenance contract, the software updates are not available for download.
+      Text=
+      Text=To purchase or reinstate your existing software maintenance contract please contact SomeTechCo.
+      Text French=Une erreur est survenue en tentant de localiser la mise à jour de %APPTITLE%. Elle peut survenir si vous n'avez pas de connexion active à l'Internet, si le serveur hôte n'est pas allumé, si vous n'avez pas d'accès au serveur hôte ou si la configuration de votre serveur proxy n'est pas correcte.
+      Text French=
+      Text French=Cliquez sur le bouton Précédent pour sélectionner la configuration de votre serveur proxy ou le bouton Annuler pour quitter ce programme.
+      Text German=Fehler beim Versuch, die Aktualisierung für %APPTITLE% zu suchen. Mögliche Ursachen dafür sind, daß Sie über keine aktive Internetverbindung verfügen, der Host-Server nicht ausgeführt wird, Sie keinen Zugriff auf den Host-Server haben oder die Einstellungen Ihres Proxy-Servers ungültig sind.
+      Text German=
+      Text German=Klicken Sie auf die Schaltfläche 'Zurück', um die Einstellungen für Ihren Proxy-Server auszuwählen, oder auf die Schaltfläche 'Abbrechen', um das Programm zu beenden.
+      Text Spanish=Se produjo un error al intentar localizar la actualización de %APPTITLE%. Este problema podría producirse si no hay una conexión activa a Internet, el servidor host no se encuentra en ejecución, no tiene acceso a este servidor o la configuración del servidor proxy no es válida.
+      Text Spanish=
+      Text Spanish=Haga clic en el botón Anterior para configurar el servidor proxy o en el botón Cancelar para salir de este programa.
+      Text Italian=Si è verificato un errore durante la ricerca dell'aggiornamento a %APPTITLE%. La causa potrebbe essere: mancanza di connessione attiva a Internet, server host non in funzione, mancanza di accesso al server host o impostazioni errate del server proxy.
+      Text Italian=
+      Text Italian=Scegliere Indietro per selezionare le impostazioni del server proxy oppure Annulla per uscire dal programma.
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Static
+      Rectangle=82 93 266 123
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=If you currently have a software maintenance contract and are still recieving this error, please contact SomeTechCo support for further information.
+    end
+    item: Static
+      Rectangle=82 10 263 22
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Flags=0000000000000001
+      Name=Arial
+      Font Style=-13 0 0 0 700 0 0 0 0 3 2 1 34
+      Text=Software Maintenance Contract Required...
+    end
+    item: Static
+      Rectangle=82 130 202 140
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=SomeTechCo Support Number - 877-999-9776
+    end
+    item: If/While Statement
+      Variable=DLG_EVENT_TYPE
+      Value=INIT
+    end
+    item: If/While Statement
+      Variable=SLA
+      Value=1
+      Flags=00000101
+    end
+    item: Set Control Attribute
+      Control Name=NextButton
+      Operation=1
+    end
+    item: End Block
+    end
+    item: End Block
+    end
+  end
+end
+item: End Block
+end
+item: Custom Dialog Set
+  Name=Text/RTF ReadMe
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=Release Notes
+    Title French=Mise à jour du fichier Lisez-moi
+    Title German=Infodatei aktualisieren
+    Title Spanish=Read Me de la actualización
+    Title Italian=Aggiorna Read Me
+    Width=280
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Push Button
+      Rectangle=172 185 214 199
+      Variable=DIRECTION
+      Value=N
+      Create Flags=01010000000000010000000000000001
+      Text=&Next >
+      Text French=&Suivant >
+      Text German=&Weiter >
+      Text Spanish=&Siguiente >
+      Text Italian=&Avanti >
+    end
+    item: Push Button
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Push Button
+      Rectangle=130 185 172 199
+      Variable=DIRECTION
+      Value=B
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000001
+      Text=< &Back
+      Text French=< &Précédent
+      Text German=< &Zurück
+      Text Spanish=< &Atrás
+      Text Italian=< I&ndietro
+    end
+    item: Static
+      Rectangle=82 10 263 74
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=Please be advised of the changes to this software version of the SomeTechCo Workflow Management Suite prior to installing this version. 
+      Text=
+      Text=There may be changes that affect your daily workflow so we strongly encourage you to click on the link below and read the release notes thouroughly.
+    end
+    item: Static
+      Rectangle=83 78 259 80
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Push Button
+      Control Name=ReleaseNotes
+      Rectangle=85 121 255 131
+      Alternate=0"https://v18.builderportal.net/Admin/Files/PublicFile/0c85d004-dd87-494e-bb79-27675a0b09fa"
+      Action=6
+      Enabled Color=00000000111111111000000000000000
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000110
+      Name=MS Sans Serif
+      Font Style=-11 0 0 0 700 0 0 0 0 1 2 1 34
+      Text=Release Notes
+    end
+    item: Push Button
+      Control Name=ReleaseNotes
+      Rectangle=85 85 255 95
+      Alternate=0"https://v19.builderportal.net/Admin/Files/PublicFile/1b58eac6-119a-4fe3-8a2a-6ef732ecad8a"
+      Action=6
+      Enabled Color=00000000111111111000000000000000
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000110
+      Name=MS Sans Serif
+      Font Style=-11 0 0 0 700 0 0 0 0 1 2 1 34
+      Text=End User License Agreement
+    end
+    item: Push Button
+      Control Name=ReleaseNotes
+      Rectangle=85 97 255 107
+      Alternate=0"https://v19.builderportal.net/Admin/Files/PublicFile/0e8c7f98-e165-4b1f-93ad-77ac2a8a6416"
+      Action=6
+      Enabled Color=00000000111111111000000000000000
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000110
+      Name=MS Sans Serif
+      Font Style=-11 0 0 0 700 0 0 0 0 1 2 1 34
+      Text=Support Agreement
+    end
+    item: Push Button
+      Control Name=ReleaseNotes
+      Rectangle=85 109 255 119
+      Alternate=0"https://v18.builderportal.net/Admin/Files/PublicFile/099a9fd7-e679-41ad-90f2-d5a5a9692a4f"
+      Action=6
+      Enabled Color=00000000111111111000000000000000
+      Create Flags=01010000000000010000000000000000
+      Flags=0000000000000110
+      Name=MS Sans Serif
+      Font Style=-11 0 0 0 700 0 0 0 0 1 2 1 34
+      Text=Installation Guide
+    end
+    item: If/While Statement
+      Variable=DLG_EVENT_TYPE
+      Value=INIT
+    end
+    item: End Block
+    end
+  end
+end
+item: Custom Dialog Set
+  Name=Start Installation
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=Start Update Download
+    Title French=Lancer téléchargement de la mise à jour
+    Title German=Herunderladen von Aktualisierung starten
+    Title Spanish=Iniciar descarga de la actualización
+    Title Italian=Inizia download aggiornamento
+    Width=280
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Push Button
+      Rectangle=172 185 214 199
+      Variable=DIRECTION
+      Value=N
+      Create Flags=01010000000000010000000000000001
+      Text=&Next >
+      Text French=&Suivant >
+      Text German=&Weiter >
+      Text Spanish=&Siguiente >
+      Text Italian=&Avanti >
+    end
+    item: Push Button
+      Rectangle=130 185 172 199
+      Variable=DIRECTION
+      Value=B
+      Create Flags=01010000000000010000000000000000
+      Text=< &Back
+      Text French=< &Précédent
+      Text German=< &Zurück
+      Text Spanish=< &Atrás
+      Text Italian=< I&ndietro
+    end
+    item: Push Button
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Static
+      Rectangle=87 10 269 71
+      Create Flags=01010000000000000000000000000000
+      Text=You are now ready to download the update to %APPTITLE%.
+      Text=
+      Text=Press the Next button to begin the download. After the update is downloaded you will be prompted to run the installation to update your software to the newest version.
+      Text French=Vous pouvez télécharger la mise à jour de %APPTITLE% maintenant.
+      Text French=
+      Text French=Appuyez sur le bouton Suivant pour lancer le téléchargement. Après avoir téléchargé la mise à jour, vous devrez lancer l'installation pour mettre votre logiciel à jour.
+      Text German=Sie können jetzt mit dem Laden der Aktualisierung von %APPTITLE% beginnen.
+      Text German=
+      Text German=Klicken Sie auf 'Weiter', um mit dem Herunterladen zu beginnen. Nachdem die Software heruntergeladen wurde, werden Sie aufgefordert, die Installation auszuführen, um Ihre Software mit der neuesten Version zu aktualisieren.
+      Text Spanish=Ahora está preparado para descargar la actualización de %APPTITLE%.
+      Text Spanish=
+      Text Spanish=Pulse el botón Siguiente para comenzar la descarga. Una vez que la actualización se descargue, deberá ejecutar el programa de instalación para actualizar el software a la versión más reciente.
+      Text Italian=È ora possibile eseguire il download dell'aggiornamento a %APPTITLE%.
+      Text Italian=
+      Text Italian=Scegliere Avanti per iniziare il download. Dopo il download dell'aggiornamento, verrà richiesto di eseguire l'installazione per aggiornare il programma alla versione più recente.
+    end
+  end
+end
+item: Remark
+end
+item: If/While Statement
+  Value=(DISPLAY="Welcome") AND (DIRECTION="N")
+  Flags=00001101
+end
+item: If/While Statement
+  Variable=ADDTOSTARTUP
+  Value=A
+  Flags=00000010
+end
+item: Create Shortcut
+  Source=%INST%\WiseUpdt.exe
+  Destination=%STARTUPDIR%\Check for SomeTechCo Product Updates.lnk
+  Command Options=/C
+  Description=Check for SomeTechCo Product Updates
+  Key Type=1536
+  Flags=00000001
+end
+item: Else Statement
+end
+item: Check if File/Dir Exists
+  Pathname=%STARTUPDIR%\Check for SomeTechCo Product Updates.lnk
+  Flags=00000100
+end
+item: Delete File
+  Pathname=%STARTUPDIR%\Check for SomeTechCo Product Updates.lnk
+end
+item: End Block
+end
+item: End Block
+end
+item: Remark
+end
+item: Edit INI File
+  Pathname=%ROOTINSTPATH%\PMWinstall\IniFiles\PMServer.ini
+  Settings=[SLA]
+  Settings=DownloadUpdates=999
+  Settings=
+end
+item: Execute Program
+  Pathname="%ROOTINSTPATH%\PMWinstall\Services\STCRegistration.exe"
+  Command Line=/UPDATEREGISTRATION
+  Default Directory="%ROOTINSTPATH%\PMWinstall\Services\"
+  Flags=00001010
+end
+item: Read INI Value
+  Variable=SLA
+  Pathname=%ROOTINSTPATH%\PMWinstall\IniFiles\PMServer.ini
+  Section=SLA
+  Item=DownloadUpdates
+  Default=999
+end
+item: If/While Statement
+  Variable=SLA
+  Value=999
+end
+item: Display Message
+  Title=Registration Validation Error
+  Text=The update application could not validate your license information with SomeTechCo.  Make sure you have a valid internet connection for this process.  Please contact SomeTechCo support for more information on this error.
+  Flags=00001000
+end
+item: Exit Installation
+end
+item: End Block
+end
+item: Remark
+end
+item: Remark
+  Text=Set the proxy settings in the registry
+end
+item: If/While Statement
+  Variable=USE_PROXY
+  Value=A
+end
+item: Edit Registry
+  Total Keys=1
+  Key=WebDeploy\ProxyEnable
+  New Value=0
+end
+item: Else Statement
+end
+item: Set Variable
+  Variable=PROXY_STRING
+  Value=%PROXY_SERVER%
+end
+item: If/While Statement
+  Variable=PORT_NUMBER
+  Flags=00000001
+end
+item: Set Variable
+  Variable=PROXY_STRING
+  Value=%PROXY_STRING%:%PORT_NUMBER%
+end
+item: End Block
+end
+item: If/While Statement
+  Variable=PROXY_TYPE
+  Value=SOCKS Proxy Server
+end
+item: Set Variable
+  Variable=PROXY_STRING
+  Value=socks=%PROXY_STRING%
+end
+item: Else Statement
+end
+item: Set Variable
+  Variable=PROXY_STRING
+  Value=http=%PROXY_STRING%
+end
+item: End Block
+end
+item: Edit Registry
+  Total Keys=2
+  item: Key
+    Key=WebDeploy\ProxyEnable
+    New Value=1
+    New Value=
+  end
+  item: Key
+    Key=WebDeploy\ProxyServer
+    New Value=%PROXY_STRING%
+  end
+end
+item: End Block
+end
+item: Edit Registry
+  Total Keys=1
+  Key=Software\Wise Solutions\WiseUpdate\Apps\%APPTITLE%
+  New Value=%CHECK_DAYS%
+  Value Name=CheckDays
+  Root=2
+  Data Type=3
+end
+item: Remark
+  Text=Download the WiseUpdate Settings INI file
+end
+item: Check HTTP Connection
+  URL=%INI_URL%
+  Win32 Error Variable=ERRORTXT
+  Win32 Status Variable=ERRORNO
+  Win16 Error Variable=ERRORTXT16
+  Win16 Status Variable=ERRORNO16
+end
+item: If/While Statement
+  Variable=ERRORNO
+  Value=0
+end
+item: Copy Local File
+  Source=%INI_URL%
+  Destination=%TEMP%\%INI_NAME%
+  Flags=0000000011100010
+end
+item: Read INI Value
+  Variable=UPD_VERSION
+  Pathname=%TEMP%\%INI_NAME%
+  Section=WiseUpdate
+  Item=Version
+end
+item: If/While Statement
+  Variable=UPD_VERSION
+  Flags=00000001
+end
+item: If/While Statement
+  Variable=UPD_VERSION
+  Value=%LOCAL_VERSION%
+end
+item: Set Variable
+  Variable=README_SKIP
+  Value=1
+end
+item: Display Message
+  Title=Update checked!
+  Title French=Mise à jour vérifiée !
+  Title German=Aktualisierung geprüft!
+  Title Spanish=Actualización comprobada
+  Title Italian=Ricerca aggiornamento completata.
+  Text=You are currently running the latest version of %APPTITLE%. Please check for updates again in the future.
+  Text French=Vous exécutez la version la plus récente de %APPTITLE%. Veuillez poursuivre les mises à jour à l'avenir.
+  Text German=Sie verwenden derzeit die neueste Version von %APPTITLE%. Informieren Sie sich regelmäßig über zukünftige Aktualisierungen.
+  Text Spanish=Actualmente, se está ejecutando la última versión de %APPTITLE%. Compruebe las actualizaciones de nuevo, en el futuro.
+  Text Italian=È in esecuzione la versione più recente di %APPTITLE%. Ripetere la ricerca degli aggiornamenti in futuro.
+end
+item: Exit Installation
+end
+item: End Block
+end
+item: Set Variable
+  Variable=ERROR_PAGE
+  Value=FALSE
+end
+item: Read INI Value
+  Variable=README_PATH
+  Pathname=%TEMP%\%INI_NAME%
+  Section=WiseUpdate
+  Item=ReleaseNotes
+end
+item: Read INI Value
+  Variable=EXE_PATH
+  Pathname=%TEMP%\%INI_NAME%
+  Section=WiseUpdate
+  Item=Install
+end
+item: Read INI Value
+  Variable=DOWNLOAD_SIZE
+  Pathname=%TEMP%\%INI_NAME%
+  Section=WiseUpdate
+  Item=Size
+end
+item: If/While Statement
+  Variable=README_PATH
+  Flags=00000001
+end
+item: Check HTTP Connection
+  URL=%README_PATH%
+  Win32 Error Variable=ERRORTXT
+  Win32 Status Variable=ERRORNO
+  Win16 Error Variable=ERRORTXT16
+  Win16 Status Variable=ERRORNO16
+end
+item: If/While Statement
+  Variable=ERRORNO
+  Value=0
+end
+item: Set Variable
+  Variable=README_SKIP
+  Value=0
+end
+item: End Block
+end
+item: End Block
+end
+item: End Block
+end
+item: End Block
+end
+item: End Block
+end
+item: End Block
+end
+item: Remark
+end
+remarked item: Check Disk Space
+end
+item: Set Variable
+  Variable=EXE_NAME
+  Value=Wise~tmp.exe
+end
+item: Set Variable
+  Variable=WISEPROGMAXBAR
+  Value=%DOWNLOAD_SIZE%
+end
+item: Set Variable
+  Variable=WISECURFILEBAR
+  Value=%DOWNLOAD_SIZE%
+end
+item: Copy Local File
+  Source=%EXE_PATH%
+  Destination=%TEMP%\%EXE_NAME%
+  Flags=0000000011000010
+end
+item: Wizard Block
+  Direction Variable=DIRECTION
+  Display Variable=DISPLAY
+  Bitmap Pathname=C:\Dev\Source\Installations\WiseUpdt\Wizard.bmp
+  X Position=9
+  Y Position=10
+  Filler Color=8421440
+  Flags=00000011
+end
+item: Custom Dialog Set
+  Name=Finished
+  Display Variable=DISPLAY
+  item: Dialog
+    Title=Download Complete
+    Title French=Téléchargement terminé
+    Title German=Download beendet
+    Title Spanish=Descarga finalizada
+    Title Italian=Download completato
+    Width=280
+    Height=224
+    Font Name=Helv
+    Font Size=8
+    item: Push Button
+      Rectangle=170 185 212 199
+      Variable=DIRECTION
+      Value=N
+      Create Flags=01010000000000010000000000000001
+      Text=&Finish >
+      Text French=&Finir >
+      Text German=&Weiter >
+      Text Spanish=&Finalizar >
+      Text Italian=&Fine >
+    end
+    item: Push Button
+      Control Name=CANCEL
+      Rectangle=222 185 264 199
+      Action=3
+      Create Flags=01010000000000010000000000000000
+      Text=Cancel
+      Text French=Annuler
+      Text German=Abbrechen
+      Text Spanish=Cancelar
+      Text Italian=Annulla
+    end
+    item: Static
+      Rectangle=9 177 263 178
+      Action=3
+      Create Flags=01010000000000000000000000000111
+    end
+    item: Static
+      Rectangle=87 10 265 64
+      Enabled Color=00000000000000001111111111111111
+      Create Flags=01010000000000000000000000000000
+      Text=The update for %APPTITLE% has been successfully downloaded.
+      Text=
+      Text=
+      Text=Press the Finish button to execute the update installation.
+      Text=
+      Text French=La mise à jour de %APPTITLE% a été entièrement téléchargée.
+      Text French=
+      Text French=
+      Text French=Cliquez sur le bouton Finir pour exécuter l'installation de la mise à jour.
+      Text French=
+      Text German=Aktualisierung von %APPTITLE% wurde erfolgreich heruntergeladen.
+      Text German=
+      Text German=
+      Text German=Klicken Sie auf 'Weiter', um die Installation zu aktualisieren.
+      Text German=
+      Text Spanish=La actualización de %APPTITLE% se ha realizado correctamente.
+      Text Spanish=
+      Text Spanish=
+      Text Spanish=Pulse el botón Finalizar para ejecutar la instalación de actualización.
+      Text Spanish=
+      Text Italian=Download dell'aggiornamento di %APPTITLE% completato.
+      Text Italian=
+      Text Italian=
+      Text Italian=Per eseguire l'installazione dell'aggiornamento, scegliere Fine.
+      Text Italian=
+    end
+    item: Push Button
+      Control Name=BACK
+      Rectangle=128 185 170 199
+      Variable=DIRECTION
+      Value=B
+      Create Flags=01010000000000010000000000000000
+      Text=< &Back
+      Text French=< &Précédent
+      Text German=< &Zurück
+      Text Spanish=< &Atrás
+      Text Italian=< I&ndietro
+    end
+    item: Set Control Attribute
+      Control Name=BACK
+      Operation=1
+    end
+    item: Set Control Attribute
+      Control Name=CANCEL
+      Operation=1
+    end
+  end
+end
+item: End Block
+end
+item: Execute Program
+  Pathname=%TEMP%\%EXE_NAME%
+  Default Directory=%TEMP%
+  Flags=00000010
+end
+item: Delete File
+  Pathname=%TEMP%\%EXE_NAME%
+end
+item: If/While Statement
+  Variable=TEMP_WEB_PAGE
+  Flags=00000001
+end
+item: Delete File
+  Pathname=%TEMP_WEB_PAGE%
+end
+item: End Block
+end
+item: Edit Registry
+  Total Keys=1
+  Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE%
+  New Value=[[Company]]
+  Value Name=Publisher
+  Root=2
+end
+item: Edit Registry
+  Total Keys=2
+  item: Key
+    Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE%
+    New Value=[[SupportPhone]]
+    Value Name=HelpTelephone
+    Root=2
+  end
+  item: Key
+    Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE%
+    New Value=[[SupportUrl]]
+    Value Name=URLInfoAbout
+    Root=2
+  end
+end
+item: Edit Registry
+  Total Keys=2
+  item: Key
+    Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE%
+    New Value=[[HelpUrl]]
+    Value Name=HelpLink
+    Root=2
+  end
+  item: Key
+    Key=Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE%
+    New Value=[[SupportContact]]
+    Value Name=Contact
+    Root=2
+  end
+end
+item: New Event
+  Name=Cancel
+end
+item: If/While Statement
+  Variable=TEMP_WEB_PAGE
+  Flags=00000001
+end
+item: Delete File
+  Pathname=%TEMP_WEB_PAGE%
+end
+item: End Block
+end
